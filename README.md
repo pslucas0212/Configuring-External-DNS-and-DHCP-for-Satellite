@@ -15,7 +15,7 @@ On your Satellite server onfigure the ownership, permissions, and SELinux contex
 # restorecon -v /etc/rndc.key
 # chown -v root:named /etc/rndc.key
 # chmod -v 640 /etc/rndc.key
-``
+```
 Test nsupdate utilitey remotely
 ```
 # echo -e "server 10.1.10.253\n \
