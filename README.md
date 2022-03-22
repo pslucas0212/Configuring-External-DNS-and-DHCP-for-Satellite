@@ -16,16 +16,7 @@ On your Satellite server onfigure the ownership, permissions, and SELinux contex
 # chown -v root:named /etc/rndc.key
 # chmod -v 640 /etc/rndc.key
 ```
-Test nsupdate utilitey remotely
-```
-# echo -e "server 10.1.10.253\n \
-update add aaa.virtual.lan 3600 IN A 10.1.10.102\n \
-send\n" | nsupdate -k /etc/rndc.key
-# nslookup aaa.virtual.lan 10.1.10.102
-# echo -e "server DNS_IP_Address\n \
-update delete aaa.virtual.lan 3600 IN A 10.1.10.102\n \
-send\n" | nsupdate -k /etc/rndc.key
-```
+
 ```
 # satellite-installer --scenario satellite \
 --foreman-initial-admin-username admin \
