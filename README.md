@@ -5,7 +5,7 @@
 ### Install and configure DNS and DHCP services to Support Dynamic Updates
 See [DNS Dynamic Updating](https://github.com/pslucas0212/DNSUpdating/blob/main/README.md) 
 
-Copy the /etc/rndc.key file from the external DNS server to Satellite Server.  On your Satellite server run the following command.
+When you first start named, named will generate a rndc key file.  Copy the /etc/rndc.key file from the external DNS server to Satellite Server.  On your Satellite server run the following command.
 ```
 # scp root@ns02.example.com:/etc/rndc.key /etc/rndc.key
 ```
