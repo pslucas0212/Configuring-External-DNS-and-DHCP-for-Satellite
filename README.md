@@ -6,5 +6,5 @@
 Let's setup and test DDNS for use with Satellite -  [DNS Dynamic Updating](https://github.com/pslucas0212/DNSUpdating/blob/main/README.md) 
 
 ### Configure DHCP for use with Satellite
-Let's configure DHCP for Satellite to use - 
+Let's configure DHCP for Satellite to use - [DHCP Setup for Satellite](https://github.com/pslucas0212/DHCP-Setup-for-Satellite)
 
