@@ -11,9 +11,7 @@ Steps used in installing and configuring the base DNS and DHCP services on a sep
 
 ## Satellite DNS Integration
 
-### Preparing and testing DNS Integration with the Satellite Server
-
-We want to test DNS update from the server hosting Satellite. To test DNS update, you will need bind installed to use nsupdate.  Install or update bind-utils on the client Server as needed
+We want to test DNS updates from the server hosting Satellite. To test DNS update, you will need bind installed to use nsupdate.  Install or update bind-utils on the client Server as needed
 ```
 # yum list installed | grep bind-utils
 # yum install bind-utils
