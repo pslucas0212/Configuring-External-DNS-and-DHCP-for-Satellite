@@ -59,6 +59,20 @@ Finally you would run the following satellite-installer command to make the foll
  # systemctl restart foreman-proxy
  ```
 
+Next login into the Satellite console and choose Infrastucture -> Subnets.
+
+![Infrastucture -> Subnets](/images/sat01.png)
+
+On the Subnets page click on the link for the sn-operations-department subnet.
+
+![Subnets -> sn-operations-department](/images/sat02.png)
+
+On the Subnets > sn-operations-department (10.1.10.0/24) update the Primary DNS Server field to match the IP address of the external DNS server, and Click the Submit button.
+
+![sn-operations-department -> Primary DNS Server](/images/sat03.png)
+
+
+
  ## Satellite DHCP Integration
 
 We previously installed the DHCP service when we installed the DNS service.  For Satellite to interact with an external DHCP service you will need to share the DHCP configuration and lease files with the Satellite Server.  In this example we are using NFS to share the configuration and lease files, and I have provided step-by-step instructions on enabling NFS services on both the server hosting DHCP and the Satellite server.
