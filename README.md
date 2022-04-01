@@ -9,10 +9,42 @@ In this tutorial we will provided step-by-step instructions to integrate externa
 
 Steps used in installing and configuring the base DNS and DHCP services on a separte server used in this tutorial are covered in the appendix section of this article
 
-### Satellite DNS Integration
+## Satellite DNS Integration
 
+### Preparing and testing DNS Integration with the Satellite Server
 
-After you have completed installing, configuring and testing the DNS server, I would suggest running nsupdate test scenario to ensure that your server hosting Satellite has the abiliy to update your extneral DNS service.
+We want to test DNS update from the server hosting Satellite. To test DNS update, you will need bind installed to use nsupdate.  Install or update bind-utils on the client Server as needed
+```
+# yum list installed | grep bind-utils
+# yum install bind-utils
+ ```   
+
+Copy and prepare the rndc.key from the server running named.
+```
+# scp root@ns02.example.com:/etc/rndc.key /etc/rndc.key
+# restorecon -v /etc/rndc.key
+# chown -v root:named /etc/rndc.key
+# chmod -v 640 /etc/rndc.key
+```
+Test updates to the forward zone (add -d to nsupdate comand for debug: nsupdate -d -k ...)
+```
+# echo -e "zone example.com.\n server 10.1.10.253\n update add atest.example.com 3600 IN A 10.1.10.10\n send\n" | nsupdate -k /etc/rndc.key
+# nslookup atest.example.com
+# echo -e "zone example.com.\n server 10.1.10.253\n update delete atest.example.com 3600 IN A 10.1.10.10\n send\n" | nsupdate -k /etc/rndc.key
+```      
+Test updates to reverse zone (add -d to nsupdate comand for debug: nsupdate -d -k ...)
+```     
+# echo -e "zone 10.1.10.in-addr.arpa.\n server 10.1.10.253\n update add 10.10.1.10.in-addr.arpa. 300 PTR atest.example.com\n send\n" | nsupdate -k /etc/rndc.key
+# nslookup 10.1.10.10
+# dig +short -x 10.1.10.10
+# echo -e "zone 10.1.10.in-addr.arpa.\n server 10.1.10.253\n update delete 10.10.1.10.in-addr.arpa. 300 PTR atest.example.com\n send\n" | nsupdate -k /etc/rndc.key
+```
+****Note**** - Typically the forward and reverse zone files are "permanently" updated around 15 minutes after the DNS update is issued from the client machine.
+
+Assign the foreman-proxy user to the named group manually. 
+```
+usermod -a -G named foreman-proxy
+```
 
 Next you would run the following satellite-installer command to make the following persistent changes to the /etc/foreman-proxy/settings.d/dns.yml file:
 ```
@@ -438,40 +470,6 @@ vsca01			A	10.1.10.240
 ```
 
 
-### Testing updates from a client - The Satellite Server
-
-You will need bind installed to use nsupdate.  Install or update bind-utils on the client Server as needed
-```
-# yum list installed | grep bind-utils
-# yum install bind-utils
- ```   
-
-Copy and prepare the rndc.key from the server running named
-```
-# scp root@ns02.example.com:/etc/rndc.key /etc/rndc.key
-# restorecon -v /etc/rndc.key
-# chown -v root:named /etc/rndc.key
-# chmod -v 640 /etc/rndc.key
-```
-Test updates to the forward zone (add -d to nsupdate comand for debug: nsupdate -d -k ...)
-```
-# echo -e "zone example.com.\n server 10.1.10.253\n update add atest.example.com 3600 IN A 10.1.10.10\n send\n" | nsupdate -k /etc/rndc.key
-# nslookup atest.example.com
-# echo -e "zone example.com.\n server 10.1.10.253\n update delete atest.example.com 3600 IN A 10.1.10.10\n send\n" | nsupdate -k /etc/rndc.key
-```      
-Test updates to reverse zone (add -d to nsupdate comand for debug: nsupdate -d -k ...)
-```     
-# echo -e "zone 10.1.10.in-addr.arpa.\n server 10.1.10.253\n update add 10.10.1.10.in-addr.arpa. 300 PTR atest.example.com\n send\n" | nsupdate -k /etc/rndc.key
-# nslookup 10.1.10.10
-# dig +short -x 10.1.10.10
-# echo -e "zone 10.1.10.in-addr.arpa.\n server 10.1.10.253\n update delete 10.10.1.10.in-addr.arpa. 300 PTR atest.example.com\n send\n" | nsupdate -k /etc/rndc.key
-```
-****Note**** - Typically the forward and reverse zone files are "permanently" updated around 15 minutes after the DNS update is issued from the client machine.
-
-Assign the foreman-proxy user to the named group manually. 
-```
-usermod -a -G named foreman-proxy
-```
 
 
 ### References
