@@ -248,7 +248,7 @@ Configure the firewall for external access to NFS. Clients are configured using 
 
  ## Appendix
 
- **Note:** named and dhcpd is running on a RHEL 8.5 server VM. For this example the subnet is 10.1.10.0/24 and domain is example.com which are dervied from the previous Satellite tutorial.
+ **Note:** For this example tutorial, the DNS and DHCP services arerunning on a RHEL 8.5 server VM. For this example the subnet is 10.1.10.0/24 and domain is example.com which are dervied from the previous Satellite tutorial.
 
 
  ### Install named and dhcpd
@@ -366,14 +366,8 @@ Configure the firewall for external access to NFS. Clients are configured using 
  				)
  			NS	ns02.example.com.
  $ORIGIN example.com.
- ds01			A	10.1.10.250
- exsi01			A	10.1.10.241
- exsi02			A	10.1.10.242
- exsi03			A	10.1.10.243
- ns01			A	10.1.1.254
  ns02			A	10.1.10.253
  sat01			A	10.1.10.254
- vsca01			A	10.1.10.240
  ```
 
  #### Reverse zone file - db.10.1.10.in-addr.arpa
@@ -389,20 +383,10 @@ Configure the firewall for external access to NFS. Clients are configured using 
  				)
  			NS	ns02.example.com.
  $ORIGIN 10.1.10.in-addr.arpa.
- 240			PTR	vsca01.example.com.
- 241			PTR	exsi01.example.com.
- 242			PTR	exsi02.example.com.
- 243			PTR	exsi03.example.com.
- 250			PTR	ds01.example.com.
  254			PTR	sat01.example.com.
  253			PTR	ns02.example.com.
  ns02			A	10.1.10.253
- ds01			A	10.1.10.250
- exsi01			A	10.1.10.241
- exsi02			A	10.1.10.242
- exsi03			A	10.1.10.243
  sat01			A	10.1.10.254
- vsca01			A	10.1.10.240
  ```
 
 
