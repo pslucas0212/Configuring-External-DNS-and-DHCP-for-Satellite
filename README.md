@@ -44,7 +44,7 @@ From the Satellite server test an update to reverse zone (add -d to nsupdate com
  usermod -a -G named foreman-proxy
  ```
 
- Now you would run the following satellite-installer command to make the following persistent changes to the /etc/foreman-proxy/settings.d/dns.yml file:
+Finally you would run the following satellite-installer command to make the following persistent changes to the /etc/foreman-proxy/settings.d/dns.yml file:
  ```
  # satellite-installer --foreman-proxy-dns=true \
  --foreman-proxy-dns-managed=false \
