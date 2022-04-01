@@ -11,7 +11,7 @@ In our previous multi-part tutorial we covered an end-to-end scenario for provis
 
  ## Satellite DNS Integration
 
- We want to test DNS updates from the server hosting Satellite. To test DNS update with nsupdate, you will need the bind utility installed on the Satellite server.  Install or update bind-utils on the client Server as needed
+ First we will want to test DNS updates from the server hosting Satellite. To test DNS update with nsupdate, you will need the bind utility installed on the Satellite server.  Install or update bind-utils on the client Server as needed
  ```
  # yum list installed | grep bind-utils
  # yum install bind-utils
