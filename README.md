@@ -5,14 +5,16 @@
 
 In our previous multi-part tutorial we covered an end-to-end scenario for provisioning RHEL VMs from Satellite to a VMWare cluster.   In that series we had the Satellite installer install and configure both DNS and DHCP services on our Satellite server.  Often you will need to integrate Satellite with an existing DNS and DHCP services in your organization.
 
-In this tutorial we will cover the steps to integrate existing DNS and DHCP services.  We will use the same lab setup from the previous tutorial for our... 
+In this tutorial we will provided step-by-step instructions to integrate external DNS and DHCP services that are a continuation from our previous multi-part tutorial [How to provision a RHEL VM from Red Hat Satellite](https://www.redhat.com/en/blog/how-provision-rhel-vm-red-hat-satellite).
 
-Steps used in installing and configuring DNS and DHCP used for this tutorial are covered in the appendix section of this article
+Steps used in installing and configuring the base DNS and DHCP services on a separte server used in this tutorial are covered in the appendix section of this article
 
 ### Satellite DNS Integration
-The real work for DNS integration with Satellite is in the setup of our DNS server which is covered in the appendix below.
 
-After you have completed installing, configuring and testing the DNS server, you would run the following satellite-installer command to make the following persistent changes to the /etc/foreman-proxy/settings.d/dns.yml file:
+
+After you have completed installing, configuring and testing the DNS server, I would suggest running nsupdate test scenario to ensure that your server hosting Satellite has the abiliy to update your extneral DNS service.
+
+Next you would run the following satellite-installer command to make the following persistent changes to the /etc/foreman-proxy/settings.d/dns.yml file:
 ```
 # satellite-installer --foreman-proxy-dns=true \
 --foreman-proxy-dns-managed=false \
@@ -136,7 +138,6 @@ success
 ```
 
 ### Preparing the Satellite Server 
-**Note: I already have Satellite installed and running.***
 
 Install the nfs-utils utility:
 ```
@@ -223,7 +224,7 @@ Associate the DHCP service with the appropriate subnets and domain.
 
 ### DNS Installation, Configuration and Testing
 
-**Note:** named is running on a RHEL 8.5 server updated in March 2022. For this example the subnet is 10.1.10.0/24 and domain is example.com
+**Note:** named is running on a RHEL 8.5 server updated in March 2022. For this example the subnet is 10.1.10.0/24 and domain is example.com which are dervied from the previous Satellite tutorial.
 
 ### Pre-Reqs
 Create a RHEL 8.5 VM to provide DDNS and DHCP services.  The VM was sized with 2 vCPUS, 4GB RAM and 100GB "local" drive.  Note: For this example I have enabled Simple Content Access (SCA) on the Red Hat Customer portal and do not need to attach a subscription to the RHEL repositories.  After you have created and started the RHEL 8.5 VM, we will ssh to the RHEL VM and work from the command line.
