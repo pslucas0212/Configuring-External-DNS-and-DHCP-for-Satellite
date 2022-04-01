@@ -61,8 +61,29 @@ Restart the foreman-proxy service:
       
 ## Satellite DHCP Integration
 
-Satellite and the DHCP server reside on different servers.  In this article we will walk through configuring the DHCP server to work with Satellite.  
+We previously installed dhcpd when we installed named.  Next we will prepare dhpcd for use with our Satellite server.  Since....
 
+First we need to generate a security token on the server hosting DHCP.
+```
+# dnssec-keygen -a HMAC-MD5 -b 512 -n HOST omapi_key
+Komapi_key.+157+56839
+```
+
+Copy the secret from the key.
+```
+# cat Komapi_key.+*.private |grep ^Key|cut -d ' ' -f2
+jNSE5YI3H1A8Oj/tkV4...A2ZOHb6zv315CkNAY7DMYYCj48Umw==
+```
+
+Add the following information to the /ect/dhcp/dhcpd.conf file.
+```
+omapi-port 7911;
+key omapi_key {
+        algorithm HMAC-MD5;
+        secret "jNSE5YI3H1A8Oj/tkV4...A2ZOHb6zv315CkNAY7DMYYCj48Umw==";
+};
+omapi-key omapi_key;
+```
 
 On the Satellite server gather foreman user UID and GID.
 ```
@@ -72,7 +93,7 @@ On the Satellite server gather foreman user UID and GID.
 981
 ```
 
-On the server hosting dns and dhcp create the foreman userid and group.
+On the server hosting dns and dhcp services create the foreman userid and group.
 ```
 # groupadd -g 981 foreman
 # useradd -u 987 -g 981 -s /sbin/nologin foreman
@@ -85,7 +106,7 @@ Restore the read ane execut flags.
 # chattr +i /etc/dhcp/ /etc/dhcp/dhcpd.conf
 ```
 
-On the server hosting dhcp, Export the DHCP configuration and lease files using NFS.
+On the server hosting dhcp, export the DHCP configuration and lease files using NFS.
 ```
 # yum install nfs-utils
 ...
@@ -228,64 +249,9 @@ Associate the DHCP service with the appropriate subnets and domain.
 ## Appendix
 
 
-### DNS Installation, Configuration and Testing
+### DNS Installation and Configuration and Testing
 
-**Note:** named is running on a RHEL 8.5 server updated in March 2022. For this example the subnet is 10.1.10.0/24 and domain is example.com which are dervied from the previous Satellite tutorial.
-
-### Pre-Reqs
-Create a RHEL 8.5 VM to provide DDNS and DHCP services.  The VM was sized with 2 vCPUS, 4GB RAM and 100GB "local" drive.  Note: For this example I have enabled Simple Content Access (SCA) on the Red Hat Customer portal and do not need to attach a subscription to the RHEL repositories.  After you have created and started the RHEL 8.5 VM, we will ssh to the RHEL VM and work from the command line.
-
-For this lab environment I chose ns02.example.com for the hostname of the server. 
-
-Register the Server to Red Hat Subscription Management service.
-```
-# sudo subscription-manager register --org=<org id> --activationkey=<activation key>
-```
-You can verify the registration with the following command.
-```
-# sudo subscription-manager status
-```    
-#### Enabled repositories  
-
-We will want the following two RHEL 8 repositoires enabled on this system:
-- rhel-8-for-x86_64-baseos-rpms
-- rhel-8-for-x86_64-appstream-rpms
-
-Verify that repositories are enabled.  
-```    
-# sudo subscription-manager repos --list-enabled
-+----------------------------------------------------------+
-    Available Repositories in /etc/yum.repos.d/redhat.repo
-+----------------------------------------------------------+
-Repo ID:   rhel-8-for-x86_64-baseos-rpms
-Repo Name: Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)
-Repo URL:  https://cdn.redhat.com/content/dist/rhel8/$releasever/x86_64/baseos/o
-           s
-Enabled:   1
-
-Repo ID:   rhel-8-for-x86_64-appstream-rpms
-Repo Name: Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)
-Repo URL:  https://cdn.redhat.com/content/dist/rhel8/$releasever/x86_64/appstrea
-           m/os
-Enabled:   1
-```          
-
-#### Update the RHEL 8.5 VM and finish server setup
-Install all the latest patches on your RHEL 8.5 Server VM
-```
-# sudo yum -y update
-Updating Subscription Management repositories.
-Red Hat Enterprise Linux 8 for x86_64 - BaseOS   27 MB/s |  45 MB     00:01    
-Red Hat Enterprise Linux 8 for x86_64 - AppStre  26 MB/s |  39 MB     00:01    
-Dependencies resolved.
-...
-Complete!
-```
- 
-I would also recommend registering this server to Insights.  
-```
-# sudo insights-client --enable
-```
+**Note:** named and dhcpd is running on a RHEL 8.5 server VM. For this example the subnet is 10.1.10.0/24 and domain is example.com which are dervied from the previous Satellite tutorial.
 
 
 ## Install named and dhcpd
@@ -317,11 +283,10 @@ Setup system Clock with chrony.  I have a local time server that my systems use 
 # chronyc sources -v
 ```
 
-See this article [DHCP Setup for Satellite](https://github.com/pslucas0212/DHCP-Setup-for-Satellite) for the configuration of DHCP.
 
 ### Configuring named
 
-In my example setup I externailize the options and zones information for easier readability.
+In my example setup I externailize the options and zones information for easier maintenance and readability.
 
 File Name | Location | Info
 ----------|----------|------
@@ -443,28 +408,7 @@ sat01			A	10.1.10.254
 vsca01			A	10.1.10.240
 ```
 
-### Setting Up External DHCP access support
-Next we need to generate a security token on the server hosting DHCP.
-```
-# dnssec-keygen -a HMAC-MD5 -b 512 -n HOST omapi_key
-Komapi_key.+157+56839
-```
 
-Copy the secret from the key.
-```
-# cat Komapi_key.+*.private |grep ^Key|cut -d ' ' -f2
-jNSE5YI3H1A8Oj/tkV4...A2ZOHb6zv315CkNAY7DMYYCj48Umw==
-```
-
-Add the following information to the /ect/dhcp/dhcpd.conf file.
-```
-omapi-port 7911;
-key omapi_key {
-        algorithm HMAC-MD5;
-        secret "jNSE5YI3H1A8Oj/tkV4...A2ZOHb6zv315CkNAY7DMYYCj48Umw==";
-};
-omapi-key omapi_key;
-```
 
 
 ### References
