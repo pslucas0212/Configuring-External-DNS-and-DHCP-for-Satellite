@@ -246,10 +246,7 @@ Navigate to Infrastructure > Capsules, locate the Satellite Server, and from the
 Associate the DHCP service with the appropriate subnets and domain. 
 
 
-## Appendix
-
-
-### DNS Installation and Configuration and Testing
+### Appendix
 
 **Note:** named and dhcpd is running on a RHEL 8.5 server VM. For this example the subnet is 10.1.10.0/24 and domain is example.com which are dervied from the previous Satellite tutorial.
 
