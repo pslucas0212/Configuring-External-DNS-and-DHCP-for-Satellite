@@ -59,7 +59,7 @@ Finally you would run the following satellite-installer command to make the foll
  # systemctl restart foreman-proxy
  ```
 
-Next login into the Satellite console and choose Infrastucture -> Subnets.
+Next login into the Satellite console and make sure that you have Operations Department chosen for the Organization and moline chose for the location.  Now choose Infrastucture -> Subnets from the side menu.
 
 ![Infrastucture -> Subnets](/images/sat01.png)
 
