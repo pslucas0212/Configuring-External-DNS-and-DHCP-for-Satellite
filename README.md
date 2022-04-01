@@ -3,7 +3,7 @@
  [Tutorial Menu](https://github.com/pslucas0212/RedHat-Satellite-VM-Provisioning-to-vSphere-Tutorial)  
 
 
- In our previous multi-part tutorial we covered an end-to-end scenario for provisioning RHEL VMs from Satellite to a VMWare cluster.   In that series we had the Satellite installer install and configure both DNS and DHCP services on our Satellite server.  Often you will need to integrate Satellite with an existing "external" DNS and DHCP services in your organization.
+In our previous multi-part tutorial we covered an end-to-end scenario for provisioning RHEL VMs from Satellite to a VMWare cluster.   In that series we had the Satellite installer install and configure both DNS and DHCP services on our Satellite server.  Often you will need to integrate Satellite with an existing "external" DNS and DHCP services in your organization.
 
  In this tutorial we will provided step-by-step instructions to integrate external DNS and DHCP services to a Satellite server.  The steps in this example are an extension to our previous multi-part tutorial [How to provision a RHEL VM from Red Hat Satellite](https://www.redhat.com/en/blog/how-provision-rhel-vm-red-hat-satellite).
 
@@ -61,7 +61,7 @@ From the Satellite server test an update to reverse zone (add -d to nsupdate com
 
  ## Satellite DHCP Integration
 
- We previously installed dhcpd when we installed named.  Next we will prepare dhpcd for use with our Satellite server.  For Satellite to interact with an external DHCP service you will need to share the DHCP configuration and lease files with Satellite Server.  In this we are using NFS to share the configurationI and I have provided step-by-step instructions on enabling NFS services on both the server hosting DHCP and the Satellite server.
+We previously installed the DHCP service when we installed the DNS service.  For Satellite to interact with an external DHCP service you will need to share the DHCP configuration and lease files with the Satellite Server.  In this example we are using NFS to share the configuration and lease files, and I have provided step-by-step instructions on enabling NFS services on both the server hosting DHCP and the Satellite server.
 
  First we need to generate a security token on the server hosting DHCP.
  ```
@@ -93,7 +93,7 @@ From the Satellite server test an update to reverse zone (add -d to nsupdate com
  981
  ```
 
- On the server hosting dns and dhcp services create the foreman userid and group.
+ On the server hosting DNS and DHCP services create the foreman userid and group.
  ```
  # groupadd -g 981 foreman
  # useradd -u 987 -g 981 -s /sbin/nologin foreman
@@ -106,7 +106,7 @@ From the Satellite server test an update to reverse zone (add -d to nsupdate com
  # chattr +i /etc/dhcp/ /etc/dhcp/dhcpd.conf
  ```
 
- On the server hosting dhcp, export the DHCP configuration and lease files using NFS.
+ On the server hosting the DHCP service, export the DHCP configuration and lease files using NFS.
  ```
  # yum install nfs-utils
  ...
@@ -152,7 +152,7 @@ From the Satellite server test an update to reverse zone (add -d to nsupdate com
  success
  ```
 
-  Optional: Configure the firewall for external access to NFS. Clients are configured using NFSv3.
+Configure the firewall for external access to NFS. Clients are configured using NFSv3.
  ```
  # firewall-cmd --zone public --add-service mountd \
  && firewall-cmd --zone public --add-service rpc-bind \
@@ -228,7 +228,7 @@ From the Satellite server test an update to reverse zone (add -d to nsupdate com
  --foreman-proxy-plugin-dhcp-remote-isc-dhcp-config /mnt/nfs/etc/dhcp/dhcpd.conf \
  --foreman-proxy-plugin-dhcp-remote-isc-dhcp-leases /mnt/nfs/var/lib/dhcpd/dhcpd.leases \
  --foreman-proxy-plugin-dhcp-remote-isc-key-name=omapi_key \
- --foreman-proxy-plugin-dhcp-remote-isc-key-secret=BWbZEXP3sMp2UHnA81uofNxAyUUEWPV7JlrNmE8p1S+XbKozKPlxDq542NRu2ERq7I/KbacdcMiECIRRoCoEAA== \
+ --foreman-proxy-plugin-dhcp-remote-isc-key-secret=jNSE5YI3H1A8Oj/tkV4...A2ZOHb6zv315CkNAY7DMYYCj48Umw=== \
  --foreman-proxy-plugin-dhcp-remote-isc-omapi-port=7911 \
  --enable-foreman-proxy-plugin-dhcp-remote-isc \
  --foreman-proxy-dhcp-server=ns02.example.com
