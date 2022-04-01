@@ -61,7 +61,7 @@ From the Satellite server test an update to reverse zone (add -d to nsupdate com
 
  ## Satellite DHCP Integration
 
- We previously installed dhcpd when we installed named.  Next we will prepare dhpcd for use with our Satellite server.  Since....
+ We previously installed dhcpd when we installed named.  Next we will prepare dhpcd for use with our Satellite server.  For Satellite to interact with an external DHCP service you will need to share the DHCP configuration and lease files with Satellite Server.  In this we are using NFS to share the configurationI and I have provided step-by-step instructions on enabling NFS services on both the server hosting DHCP and the Satellite server.
 
  First we need to generate a security token on the server hosting DHCP.
  ```
