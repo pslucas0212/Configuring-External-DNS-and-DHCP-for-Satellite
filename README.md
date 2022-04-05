@@ -75,7 +75,7 @@ On the Subnets > sn-operations-department (10.1.10.0/24) update the Primary DNS 
 
  ## Satellite DHCP Integration
 
-We previously installed the DHCP service when we installed the DNS service.  For Satellite to interact with an external DHCP service you will need to share the DHCP configuration and lease files with the Satellite Server.  In this example we are using NFS to share the configuration and lease files, and I have provided step-by-step instructions on enabling NFS services on both the server hosting DHCP and the Satellite server.
+For Satellite to interact with an external DHCP service you will need to share the DHCP configuration and lease files with the Satellite Server.  In this example we are using NFS to share the configuration and lease files, and I have provided step-by-step instructions on enabling NFS services on both the server hosting DHCP and the Satellite server.
 
  First we need to generate a security token on the server hosting DHCP.
  ```
