@@ -113,7 +113,7 @@ For Satellite to interact with an external DHCP service you will need to share t
  # useradd -u 987 -g 981 -s /sbin/nologin foreman
  ```
 
- Restore the read ane execut flags.
+ Restore the read and execute flags.
  ```
  # chmod o+rx /etc/dhcp/
  # chmod o+r /etc/dhcp/dhcpd.conf
