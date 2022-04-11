@@ -2,6 +2,7 @@
 
  [Tutorial Menu](https://github.com/pslucas0212/RedHat-Satellite-VM-Provisioning-to-vSphere-Tutorial)  
 
+## Introduction
 
 In our previous multi-part tutorial we covered an end-to-end scenario for provisioning RHEL VMs from Satellite to a VMWare cluster.   In that series we had the Satellite installer install and configure both DNS and DHCP services on our Satellite server.  Often you will need to integrate Satellite with an existing "external" DNS and DHCP services in your organization.
 
@@ -73,7 +74,7 @@ On the Subnets > sn-operations-department (10.1.10.0/24) update the Primary DNS 
 
 
 
- ## Satellite DHCP Integration
+## Satellite DHCP Integration
 
 For Satellite to interact with an external DHCP service you will need to share the DHCP configuration and lease files with the Satellite Server.  In this example we are using NFS to share the configuration and lease files, and I have provided step-by-step instructions on enabling NFS services on both the server hosting DHCP and the Satellite server.
 
