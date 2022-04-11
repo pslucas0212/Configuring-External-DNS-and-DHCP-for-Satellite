@@ -6,7 +6,7 @@
 
 In our previous multi-part tutorial we covered an end-to-end scenario for provisioning RHEL VMs from Satellite to a VMWare cluster.   In that series we had the Satellite installer install and configure both DNS and DHCP services on our Satellite server.  Often you will need to integrate Satellite with an existing "external" DNS and DHCP services in your organization.
 
- In this tutorial we will provided step-by-step instructions to integrate external DNS and DHCP services to a Satellite server.  The steps in this example are an extension to our previous multi-part tutorial [How to provision a RHEL VM from Red Hat Satellite](https://www.redhat.com/en/blog/how-provision-rhel-vm-red-hat-satellite).
+ In this tutorial we will provide step-by-step instructions to integrate external DNS and DHCP services to a Satellite server.  The steps in this example are an extension to our previous multi-part tutorial [How to provision a RHEL VM from Red Hat Satellite](https://www.redhat.com/en/blog/how-provision-rhel-vm-red-hat-satellite).
 
  Steps used in installing and configuring the base DNS and DHCP services on a separate server for use with this tutorial are covered in the appendix section of this article.  
 
