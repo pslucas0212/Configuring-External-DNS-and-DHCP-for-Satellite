@@ -260,6 +260,10 @@ Configure the firewall for external access to NFS. Clients are configured using 
 
  Associate the DHCP service with the appropriate subnets and domain. 
 
+### Conclusion
+
+Satellite provides you all the components you need to easily and efficiently provision, patch and manage the lifecycle of your RHEL environment.  While everything you need is provided with Satellite for managing your RHEL lifecycle, Satellite also easyily integrates with other services.  In this tutorial we provided you the steps to integrate your Satellite RHEL lifecycle management with existing DNS and DHCP services that you may have already deployed in your organization.
+
 
  ## Appendix
 
@@ -407,7 +411,7 @@ Configure the firewall for external access to NFS. Clients are configured using 
 
 
 
- ### References
+ ## References
  - [Chapter 5. Configuring Satellite Server with External Services](https://access.redhat.com/documentation/en-us/red_hat_satellite/6.9/html/installing_satellite_server_from_a_connected_network/configuring-external-services)
  - [How to configure the BIND DNS service](https://access.redhat.com/solutions/40683)
  - [How to configure Dynamic DNS Server on AlmaLinux / Rocky Linux](https://www.techbrown.com/configure-dynamic-dns-server-almalinux-rocky-linux/)
