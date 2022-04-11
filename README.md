@@ -254,11 +254,8 @@ Configure the firewall for external access to NFS. Clients are configured using 
  # systemctl restart foreman-proxy
  ```
 
- Log in to the Satellite Server web UI.
-
- Navigate to Infrastructure > Capsules, locate the Satellite Server, and from the list in the Actions column, select Refresh.
-
- Associate the DHCP service with the appropriate subnets and domain. 
+Satellite will now use external DNS and DHCP services when provisioning and managing the RHEL lifecyle.
+ 
 
 ### Conclusion
 
