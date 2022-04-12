@@ -6,7 +6,7 @@
 
 In our previous multi-part tutorial we covered an end-to-end scenario for provisioning RHEL VMs from Satellite to a VMWare cluster.   In that series we had the Satellite installer install and configure both DNS and DHCP services on our Satellite server.  Often you will need to integrate Satellite with an existing "external" DNS and DHCP services in your organization.
 
- In this tutorial we will provide step-by-step instructions to integrate external DNS and DHCP services to a Satellite server.  The steps in this example are an extension to our previous multi-part tutorial [How to provision a RHEL VM from Red Hat Satellite](https://www.redhat.com/en/blog/how-provision-rhel-vm-red-hat-satellite).
+n this tutorial we extend our work from the previous tutorial by providing step-by-step instructions to integrate external DNS and DHCP services to a Satellite server. The steps in this example are an extension to our previous multi-part tutorial  [How to provision a RHEL VM from Red Hat Satellite](https://www.redhat.com/en/blog/how-provision-rhel-vm-red-hat-satellite).
 
  Steps used in installing and configuring the base DNS and DHCP services on a separate server for use with this tutorial are covered in the appendix section of this article.  
 
@@ -254,22 +254,22 @@ Configure the firewall for external access to NFS. Clients are configured using 
  # systemctl restart foreman-proxy
  ```
 
-Satellite will now use external DNS and DHCP services when provisioning and managing the RHEL lifecyle.
+Satellite will now use external DNS and DHCP services when provisioning and managing the RHEL lifecycle.
  
 
 ### Conclusion
 
-Satellite provides you all the components you need to easily and efficiently provision, patch and manage the lifecycle of your RHEL environment.  While everything you need is provided with Satellite for managing your RHEL lifecycle, Satellite also easyily integrates with other services.  In this tutorial we provided you the steps to integrate your Satellite RHEL lifecycle management with existing DNS and DHCP services that you may have already deployed in your organization.
+Satellite provides you all the components you need to easily and efficiently provision, patch and manage the lifecycle of your RHEL environment.  While everything you need is provided with Satellite for managing your RHEL lifecycle, Satellite also easily integrates with other services.  In this tutorial we provided you the steps to integrate your Satellite RHEL lifecycle management with existing DNS and DHCP services that you may have already deployed in your organization.
 
 
  ## Appendix
 
- **Note:** For this example tutorial, the DNS and DHCP services arerunning on a RHEL 8.5 server VM. For this example the subnet is 10.1.10.0/24 and domain is example.com which are dervied from the previous Satellite tutorial.
+ **Note:** For this example tutorial, the DNS and DHCP services are running on a RHEL 8.5 server VM. For this example the subnet is 10.1.10.0/24 and domain is example.com which are derived from the previous Satellite tutorial.
 
 
  ### Install named and dhcpd
 
- We will install named, the bind utilities, the dns caching sever and dhcpd.
+ We will install named, the bind utilities, the dns caching server and dhcpd.
  ```
  # sudo yum -y install bind* caching* dhcp*
  ...
@@ -291,7 +291,7 @@ Satellite provides you all the components you need to easily and efficiently pro
  ```
  # sudo firewall-cmd --list-all
  ```
- Setup system Clock with chrony.  I have a local time server that my systems use for synching time.  Type the following command to check the the time synch status.  
+ Setup system Clock with chrony.  I have a local time server that my systems use for synching time.  Type the following command to check the time sync status.  
  ```
  # chronyc sources -v
  ```
@@ -299,7 +299,7 @@ Satellite provides you all the components you need to easily and efficiently pro
 
  ### Configuring named
 
- In my example setup I externailize the options and zones information for easier maintenance and readability.
+ In my example setup I externalize the options and zones information for easier maintenance and readability.
 
  File Name | Location | Info
  ----------|----------|------
