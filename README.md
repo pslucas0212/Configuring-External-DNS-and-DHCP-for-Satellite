@@ -406,6 +406,8 @@ Satellite provides you all the components you need to easily and efficiently pro
  ```
 
 ### Configuring dhcpd
+
+After you have installed the DCHP service you will want to edit the /etc/dhcp/dhcpd.conf.  Below is how I configure my dhcp serivce.
 ```
 option domain-name "example.com";
 default-lease-time 86400;
