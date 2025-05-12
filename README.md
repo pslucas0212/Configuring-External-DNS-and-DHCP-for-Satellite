@@ -405,7 +405,21 @@ Satellite provides you all the components you need to easily and efficiently pro
  sat01			A	10.1.10.254
  ```
 
+### Configuring dhcpd
+```
+option domain-name "example.com";
+default-lease-time 86400;
 
+authoritative;
+
+subnet 10.1.10.0 netmask 255.255.255.0 [
+  range 10.1.10.100 10.1.10.200;
+  option domain-name-servers 10.1.10.2;
+  option routers 10.1.10.1;
+  option broadcast-address 10.1.10.255;
+  max-lease-time 172800;
+}
+```
 
 
  ## References
