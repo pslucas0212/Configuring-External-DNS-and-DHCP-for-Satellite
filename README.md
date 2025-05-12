@@ -14,8 +14,8 @@ In this tutorial we extend our work from the previous tutorial by providing step
 
  First we will want to test DNS updates from the server hosting Satellite. To test DNS updates with nsupdate, you will need the bind utility installed on the Satellite server.  Install or update bind-utils on the client Server as needed.
  ```
- # yum list installed | grep bind-utils
- # yum install bind-utils
+ # dnf list installed | grep bind-utils
+ # dnf -y install bind-utils
   ```   
 
  From the server running named, copy the rndc.key to the Satellite Server and set it up for use with Satellite.
@@ -123,7 +123,7 @@ For Satellite to interact with an external DHCP service you will need to share t
 
  On the server hosting the DHCP service, export the DHCP configuration and lease files using NFS.
  ```
- # yum install nfs-utils
+ # dnf -y install nfs-utils
  ...
  complete!
  # systemctl enable rpcbind nfs-server
@@ -264,14 +264,14 @@ Satellite provides you all the components you need to easily and efficiently pro
 
  ## Appendix
 
- **Note:** For this example tutorial, the DNS and DHCP services are running on a RHEL 8.5 server VM. For this example the subnet is 10.1.10.0/24 and domain is example.com which are derived from the previous Satellite tutorial.
+ **Note:** For this example tutorial, the DNS and DHCP services are running on a RHEL 9.5 server VM. For this example the subnet is 10.1.10.0/24 and domain is example.com which are derived from the previous Satellite tutorial.
 
 
  ### Install named and dhcpd
 
  We will install named, the bind utilities, the dns caching server and dhcpd.
  ```
- # sudo yum -y install bind* caching* dhcp*
+ # dnf -y install bind* cach* dhcp-server
  ...
  Complete!
  ```
@@ -284,12 +284,12 @@ Satellite provides you all the components you need to easily and efficiently pro
  ```
  Make the firewall changes permanent
  ```
- # sudo firewall-cmd --runtime-to-permanent
+ # firewall-cmd --runtime-to-permanent
  ```
 
  Verify the firewall changes
  ```
- # sudo firewall-cmd --list-all
+ # firewall-cmd --list-all
  ```
  Setup system Clock with chrony.  I have a local time server that my systems use for synching time.  Type the following command to check the time sync status.  
  ```
