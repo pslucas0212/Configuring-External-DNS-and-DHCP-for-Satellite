@@ -414,7 +414,7 @@ default-lease-time 86400;
 
 authoritative;
 
-subnet 10.1.10.0 netmask 255.255.255.0 [
+subnet 10.1.10.0 netmask 255.255.255.0 {
   range 10.1.10.100 10.1.10.200;
   option domain-name-servers 10.1.10.2;
   option routers 10.1.10.1;
@@ -423,6 +423,22 @@ subnet 10.1.10.0 netmask 255.255.255.0 [
 }
 ```
 
+If you have no errors in the dhcpd.conf file, the dhcp daemon should start up.  We can also checkt that the service is active.
+```
+# systemctl start dhcpd
+#
+# systemctl is-active dhcpd
+active
+
+```
+
+Let's enable the service to automatically start when our RHEL server starts up or is rebooted.  And let's check to see if the dhcp service is enabled.
+```
+# systemctl enable dhcpd
+Created symlink /etc/systemd/system/multi-user.target.wants/dhcpd.service → /usr/lib/systemd/system/dhcpd.service.
+# systemctl is-enabled dhcpd
+enabled
+```
 
  ## References
  - [Chapter 5. Configuring Satellite Server with External Services](https://access.redhat.com/documentation/en-us/red_hat_satellite/6.9/html/installing_satellite_server_from_a_connected_network/configuring-external-services)
